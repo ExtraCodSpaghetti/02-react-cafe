@@ -1,6 +1,6 @@
 
 
-/* import Notification from '../Notification/Notification'; */
+import Notification from '../Notification/Notification';
 import VoteOptions from '../VoteOptions/VoteOptions';
 import VoteStats from '../VoteStats/VoteStats';
 import CafeInfo from '../CafeInfo/CafeInfo';
@@ -14,6 +14,8 @@ export default function App() {
     neutral: 0,
     bad: 0,
   });
+
+  const totalVotes = votes.good + votes.neutral + votes.bad;
 
   const handleVote = (type: VoteType) => {
     setVotes(prev => ({
@@ -33,9 +35,14 @@ export default function App() {
   return (
     <div className={css.app}>
       <CafeInfo />
-      <VoteOptions onVote={handleVote} onReset={resetVotes} />
-      <VoteStats good={votes.good} neutral={votes.neutral} bad={votes.bad} />
+      <VoteOptions onVote={handleVote} onReset={resetVotes} canReset={totalVotes > 0} />
+      {totalVotes > 0 ? (
+        <VoteStats good={votes.good} neutral={votes.neutral} bad={votes.bad} />
+      ) : (
+        <Notification />
+      )}
     </div>
   );
 }
+
 
