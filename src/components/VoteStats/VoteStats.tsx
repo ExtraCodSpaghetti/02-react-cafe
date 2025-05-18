@@ -1,23 +1,20 @@
-import React from 'react';
 import styles from './VoteStats.module.css';
+import type { Votes } from '../../types/votes';
 
 interface VoteStatsProps {
-  good: number;
-  neutral: number;
-  bad: number;
+  votes: Votes;
+  totalVotes: number;
+  positiveRate: number;
 }
 
-const VoteStats: React.FC<VoteStatsProps> = ({ good, neutral, bad }) => {
-  const total = good + neutral + bad;
-  const positive = total > 0 ? Math.round((good / total) * 100) : 0;
-
+const VoteStats: React.FC<VoteStatsProps> = ({ votes, totalVotes, positiveRate }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.stat}><span>Good:</span> <strong>{good}</strong></div>
-      <div className={styles.stat}><span>Neutral:</span> <strong>{neutral}</strong></div>
-      <div className={styles.stat}><span>Bad:</span> <strong>{bad}</strong></div>
-      <div className={styles.stat}><span>Total:</span> <strong>{total}</strong></div>
-      <div className={styles.stat}><span>Positive:</span> <strong>{positive}%</strong></div>
+      <div className={styles.stat}><span>Good:</span> <strong>{votes.good}</strong></div>
+      <div className={styles.stat}><span>Neutral:</span> <strong>{votes.neutral}</strong></div>
+      <div className={styles.stat}><span>Bad:</span> <strong>{votes.bad}</strong></div>
+      <div className={styles.stat}><span>Total:</span> <strong>{totalVotes}</strong></div>
+      <div className={styles.stat}><span>Positive:</span> <strong>{positiveRate}%</strong></div>
     </div>
   );
 };
